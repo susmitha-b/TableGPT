@@ -32,25 +32,25 @@ def rebuild_sent(line):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='生成设备')
-    parser.add_argument('--batch_size', default=1, type=int, required=False, help='生成的batch size')
-    parser.add_argument('--temperature', default=1, type=float, required=False, help='生成温度')
-    parser.add_argument('--topk', default=8, type=int, required=False, help='最高几选一')
-    parser.add_argument('--topp', default=0, type=float, required=False, help='最高积累概率')
-    parser.add_argument('--max_length', default=50, type=int, required=False, help='生成文本最长长度')
-    parser.add_argument('--num_beams', default=5, type=int, required=False, help='束搜索宽度')
-    parser.add_argument('--tokenizer_path', default='models/gpt2/', type=str, required=False, help='词表路径')
-    parser.add_argument('--model_path', default='model/final_model', type=str, required=False, help='模型路径')
-    parser.add_argument('--segment', action='store_true', help='中文以词为单位')
-    parser.add_argument('--src_test', default='data/WikiBio/wikibio_src_test.txt', type=str, required=False, help='测试输入文件路径')
-    parser.add_argument('--save_output_path', default='.', type=str, required=False, help="保存样本的路径")
+    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='build the device')
+    parser.add_argument('--batch_size', default=1, type=int, required=False, help='generated batch size')
+    parser.add_argument('--temperature', default=1, type=float, required=False, help='The resulting temperature')
+    parser.add_argument('--topk', default=8, type=int, required=False, help='Choose one of the highest')
+    parser.add_argument('--topp', default=0, type=float, required=False, help='Highest accumulation probability')
+    parser.add_argument('--max_length', default=50, type=int, required=False, help='The maximum length of the generated text')
+    parser.add_argument('--num_beams', default=5, type=int, required=False, help='Bundle search width')
+    parser.add_argument('--tokenizer_path', default='models/gpt2/', type=str, required=False, help='Thesaurus path')
+    parser.add_argument('--model_path', default='model/final_model', type=str, required=False, help='Model path')
+    parser.add_argument('--segment', action='store_true', help='Chinese is in words')
+    parser.add_argument('--src_test', default='data/WikiBio/wikibio_src_test.txt', type=str, required=False, help='Test the input file path')
+    parser.add_argument('--save_output_path', default='.', type=str, required=False, help="The path where the sample is saved")
     parser.add_argument('--repetition_penalty', default=1.0, type=float, required=False)
     parser.add_argument('--length_penalty', default=1.0, type=float, required=False)
-    parser.add_argument('--do_sample', action='store_true', help='生成时候是否对词表概率做采样')
-    parser.add_argument('--eos', action='store_true', help='beam search生成时候是否遇到eos符号停止')
+    parser.add_argument('--do_sample', action='store_true', help='Whether to sample the probability of the vocabulary list at the time of generation')
+    parser.add_argument('--eos', action='store_true', help='beam search Whether EOS symbol stops are encountered when generating')
     args = parser.parse_args()
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.device  # 此处设置程序使用哪些显卡
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.device  # Set here which graphics cards the program uses
     max_length = args.max_length
     batch_size = args.batch_size
     temperature = args.temperature
