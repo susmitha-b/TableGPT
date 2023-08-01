@@ -114,52 +114,52 @@ def rebuild_sent(line):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='设置使用哪些显卡')
+    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='What a use')
     parser.add_argument('--model_config', default='config/model_config_small.json', type=str, required=False,
-                        help='选择模型参数')
-    parser.add_argument('--tokenizer_path', default='cache/vocab_small.txt', type=str, required=False, help='选择词库')
-    parser.add_argument('--raw_data_path', default='data/train.json', type=str, required=False, help='原始训练语料')
+                        help='Select model parameters')
+    parser.add_argument('--tokenizer_path', default='cache/vocab_small.txt', type=str, required=False, help='Select thesaurus')
+    parser.add_argument('--raw_data_path', default='data/train.json', type=str, required=False, help='original training corpus')
     parser.add_argument('--tokenized_train_path', default='data/', type=str, required=True,
-                        help='训练集目标tokenized语料存放位置')
+                        help='Storage location of training set target tokenized corpus')
     parser.add_argument('--src_tokenized_train_path', default='data/', type=str, required=True,
-                        help='训练集src tokenized语料存放位置')
+                        help='Training set src tokenized corpus storage location')
     parser.add_argument('--text_mask_train_path', default='data/', type=str, required=True,
-                        help='训练集构造文本mask文件存放位置')
+                        help='The storage location of the training set construction text mask file')
     parser.add_argument('--entity_mask_train_path', default='data/', type=str, required=True,
-                        help='训练集构造实体mask文件存放位置')
+                        help='The storage location of the training set construction entity mask file')
     parser.add_argument('--field_label_train_path', default='data/', type=str, required=True,
-                        help='训练集构造tokenized语料存放位置')
+                        help='Training set construction tokenized corpus storage location')
     parser.add_argument('--label_mask_train_path', default='data/', type=str, required=True,
-                        help='训练集构造tokenized语料存放位置')
+                        help='Training set construction tokenized corpus storage location')
     parser.add_argument('--tokenized_dev_path', default='data/', type=str, required=False,
-                        help='验证集tokenized语料存放位置')
+                        help='Verification set tokenized corpus storage location')
     parser.add_argument('--src_dev', default='data/', type=str, required=False,
-                        help='验证集输入语料存放位置')
+                        help='Validation set input corpus storage location')
     parser.add_argument('--tgt_dev', default='data/', type=str, required=False,
-                        help='验证集输出语料存放位置')
+                        help='Verification set output corpus storage location')
     parser.add_argument('--log_file', default='data/', type=str, required=False,
-                        help='log文件存放位置')
-    parser.add_argument('--epochs', default=5, type=int, required=False, help='训练循环')
-    parser.add_argument('--batch_size', default=8, type=int, required=False, help='训练batch size')
-    parser.add_argument('--lr', default=1.5e-4, type=float, required=False, help='学习率')
-    parser.add_argument('--warmup_steps', default=2000, type=int, required=False, help='warm up步数')
+                        help='log file storage location')
+    parser.add_argument('--epochs', default=5, type=int, required=False, help='training loop')
+    parser.add_argument('--batch_size', default=8, type=int, required=False, help='training batch size')
+    parser.add_argument('--lr', default=1.5e-4, type=float, required=False, help='learning rate')
+    parser.add_argument('--warmup_steps', default=2000, type=int, required=False, help='warm up steps')
     parser.add_argument('--seed', default=1234, type=int, required=False, help='random seed')
-    parser.add_argument('--log_step', default=1, type=int, required=False, help='多少步汇报一次loss')
-    parser.add_argument('--gradient_accumulation', default=1, type=int, required=False, help='梯度积累')
-    parser.add_argument('--fp16', action='store_true', help='混合精度')
+    parser.add_argument('--log_step', default=1, type=int, required=False, help='How many steps to report a loss')
+    parser.add_argument('--gradient_accumulation', default=1, type=int, required=False, help='gradient accumulation')
+    parser.add_argument('--fp16', action='store_true', help='mixed precision')
     parser.add_argument('--fp16_opt_level', default='O1', type=str, required=False)
     parser.add_argument('--max_grad_norm', default=1.0, type=float, required=False)
-    parser.add_argument('--start_save_epoch', default=1, type=int, required=False, help='开始保存模型的轮数')
-    parser.add_argument('--start_eval_epoch', default=1, type=int, required=False, help='开始计算验证集BLEU值的轮数')
-    parser.add_argument('--output_dir', default='model/', type=str, required=False, help='模型输出路径')
-    parser.add_argument('--pretrained_model', default='', type=str, required=False, help='模型训练起点路径')
-    parser.add_argument('--shuffle', action='store_true', help='是否在每个epoch打乱batch顺序')
-    parser.add_argument('--segment', action='store_true', help='中文以词为单位')
+    parser.add_argument('--start_save_epoch', default=1, type=int, required=False, help='Number of epochs to start saving the model')
+    parser.add_argument('--start_eval_epoch', default=1, type=int, required=False, help='The number of rounds to start calculating the BLEU value of the validation set')
+    parser.add_argument('--output_dir', default='model/', type=str, required=False, help='Model output path')
+    parser.add_argument('--pretrained_model', default='', type=str, required=False, help='Model Training Starting Path')
+    parser.add_argument('--shuffle', action='store_true', help='Whether to shuffle the batch order at each epoch')
+    parser.add_argument('--segment', action='store_true', help='Chinese word as unit')
 
     args = parser.parse_args()
     print('args:\n' + args.__repr__())
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.device  # 此处设置程序使用哪些显卡
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.device  # Set which graphics card the program uses here
     model_config = transformers.modeling_gpt2.GPT2Config.from_json_file(args.model_config)
     print('config:\n' + model_config.to_json_string())
 
@@ -182,7 +182,7 @@ def main():
     warmup_steps = args.warmup_steps
     log_step = args.log_step
     gradient_accumulation = args.gradient_accumulation
-    fp16 = args.fp16  # 不支持半精度的显卡请勿打开
+    fp16 = args.fp16  # Do not open graphics cards that do not support half-precision
     fp16_opt_level = args.fp16_opt_level
     max_grad_norm = args.max_grad_norm
     output_dir = args.output_dir
