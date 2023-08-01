@@ -112,11 +112,11 @@ def rebuild_sent(line):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='设置使用哪些显卡')
+    parser.add_argument('--device', default='0,1,2,3', type=str, required=False, help='Set which graphics cards to use')
     parser.add_argument('--model_config', default='config/model_config_small.json', type=str, required=False,
-                        help='选择模型参数')
-    parser.add_argument('--tokenizer_path', default='cache/vocab_small.txt', type=str, required=False, help='选择词库')
-    parser.add_argument('--raw_data_path', default='data/train.json', type=str, required=False, help='原始训练语料')
+                        help='Select Model Parameters')
+    parser.add_argument('--tokenizer_path', default='cache/vocab_small.txt', type=str, required=False, help='Select Thesaurus')
+    parser.add_argument('--raw_data_path', default='data/train.json', type=str, required=False, help='Original training corpus')
     parser.add_argument('--tokenized_gold_train_path', default='data/', type=str, required=True,
                         help='训练集目标tokenized语料存放位置')
     parser.add_argument('--text_mask_train_path', default='data/', type=str, required=True,
